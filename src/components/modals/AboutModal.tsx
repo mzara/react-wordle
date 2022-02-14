@@ -9,13 +9,12 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="About" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        This is an open source version of the word guessing game we all know and
-        love -{' '}
+        Wanted to keep busy in between episodes 😄 and I love AOT -{' '}
         <a
           href="https://github.com/cwackerfuss/react-wordle"
-          className="underline font-bold"
+          className="underline"
         >
-          check out the code here
+          orginal code by cwackerfuss
         </a>{' '}
       </p>
     </BaseModal>
