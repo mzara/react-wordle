@@ -82,4 +82,5 @@ export const WORDS = [
   'queen',
   'beach',
   'bread',
+  'chain',
   ]
