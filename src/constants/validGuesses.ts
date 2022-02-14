@@ -6340,7 +6340,6 @@ export const VALID_GUESSES = [
   'lever',
   'leves',
   'levin',
-  'levis',
   'lewis',
   'lexes',
   'lexis',
