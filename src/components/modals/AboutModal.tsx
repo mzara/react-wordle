@@ -9,7 +9,15 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="About" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Wanted to keep busy in between episodes 😄 and I love AOT -{' '}
+        Brought to you by-{' '}
+        <a
+          href="https://www.instagram.com/paradis.co.merch/"
+          className="underline"
+        >
+          Paradis Co Merch
+        </a>{' '}
+		will have AOT merch coming soon!
+		-{' '}
         <a
           href="https://github.com/cwackerfuss/react-wordle"
           className="underline"
