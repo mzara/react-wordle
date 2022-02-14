@@ -1,8 +1,4 @@
-import {
-  InformationCircleIcon,
-  ChartBarIcon,
-  CogIcon,
-} from '@heroicons/react/outline'
+import { InformationCircleIcon, ChartBarIcon } from '@heroicons/react/outline'
 import { useState, useEffect } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
@@ -26,39 +22,26 @@ import {
   REVEAL_TIME_MS,
   GAME_LOST_INFO_DELAY,
 } from './constants/settings'
-import {
-  isWordInWordList,
-  isWinningWord,
-  solution,
-  findFirstUnusedReveal,
-} from './lib/words'
+import { isWordInWordList, isWinningWord, solution } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
-  setStoredIsHighContrastMode,
-  getStoredIsHighContrastMode,
 } from './lib/localStorage'
 
 import './App.css'
 
 function App() {
-  const prefersDarkMode = false
-
   const [currentGuess, setCurrentGuess] = useState('')
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
-  const [isHardModeAlertOpen, setIsHardModeAlertOpen] = useState(false)
   const [isWordNotFoundAlertOpen, setIsWordNotFoundAlertOpen] = useState(false)
   const [currentRowClass, setCurrentRowClass] = useState('')
   const [isGameLost, setIsGameLost] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(!prefersDarkMode)
-  const [isHighContrastMode, setIsHighContrastMode] = useState(
-    getStoredIsHighContrastMode()
-  )
+
   const [successAlert, setSuccessAlert] = useState('')
   const [isRevealing, setIsRevealing] = useState(false)
   const [guesses, setGuesses] = useState<string[]>(() => {
@@ -77,37 +60,6 @@ function App() {
   })
 
   const [stats, setStats] = useState(() => loadStats())
-
-  const [isHardMode, setIsHardMode] = useState(
-    localStorage.getItem('gameMode')
-      ? localStorage.getItem('gameMode') === 'hard'
-      : false
-  )
-
-  const [isMissingPreviousLetters, setIsMissingPreviousLetters] =
-    useState(false)
-  const [missingLetterMessage, setIsMissingLetterMessage] = useState('')
-
-  useEffect(() => {
-    document.documentElement.classList.remove('dark')
-
-    document.documentElement.classList.remove('high-contrast')
-  }, [isDarkMode, isHighContrastMode])
-
-  const handleDarkMode = (isDark: boolean) => {
-    setIsDarkMode(false)
-    localStorage.setItem('theme', 'light')
-  }
-
-  const handleHardMode = (isHard: boolean) => {
-    setIsHardMode(false)
-    localStorage.setItem('theme', 'normal')
-  }
-
-  const handleHighContrastMode = (isHighContrast: boolean) => {
-    setIsHighContrastMode(false)
-    setStoredIsHighContrastMode(false)
-  }
 
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
@@ -167,20 +119,6 @@ function App() {
         setIsWordNotFoundAlertOpen(false)
         setCurrentRowClass('')
       }, ALERT_TIME_MS)
-    }
-
-    // enforce hard mode - all guesses must contain all previously revealed letters
-    if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
-      if (firstMissingReveal) {
-        setIsMissingLetterMessage(firstMissingReveal)
-        setIsMissingPreviousLetters(true)
-        setCurrentRowClass('jiggle')
-        return setTimeout(() => {
-          setIsMissingPreviousLetters(false)
-          setCurrentRowClass('')
-        }, ALERT_TIME_MS)
-      }
     }
 
     setIsRevealing(true)
@@ -255,7 +193,7 @@ function App() {
           setSuccessAlert(GAME_COPIED_MESSAGE)
           return setTimeout(() => setSuccessAlert(''), ALERT_TIME_MS)
         }}
-        isHardMode={isHardMode}
+        isHardMode={false}
       />
       <AboutModal
         isOpen={isAboutModalOpen}
@@ -275,7 +213,6 @@ function App() {
         message={WORD_NOT_FOUND_MESSAGE}
         isOpen={isWordNotFoundAlertOpen}
       />
-      <Alert message={missingLetterMessage} isOpen={isMissingPreviousLetters} />
       <Alert
         message={CORRECT_WORD_MESSAGE(solution)}
         isOpen={isGameLost && !isRevealing}
