@@ -16,7 +16,7 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
         >
           Paradis Co Merch
         </a>{' '}
-		. Will have AOT merch coming soon!
+		. Anime merch coming soon!
 		-{' '}
         <a
           href="https://github.com/cwackerfuss/react-wordle"
