@@ -1,7 +1,7 @@
 export const WORDS = [
   'pyxis',
   'miche',
-  'fritz',
+  'flare',
   'trost',
   'scout',
   'heart',
@@ -61,7 +61,7 @@ export const WORDS = [
   'willy',
   'cadet',
   'signal',
-  'flare',
+  'fritz',
   'manga',
   'sword',
   'green',
